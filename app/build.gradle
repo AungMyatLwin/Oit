@@ -7,6 +7,9 @@ android {
     namespace 'com.rig.oit'
     compileSdk 33
 
+    buildFeatures{
+        viewBinding true
+    }
     defaultConfig {
         applicationId "com.rig.oit"
         minSdk 26
