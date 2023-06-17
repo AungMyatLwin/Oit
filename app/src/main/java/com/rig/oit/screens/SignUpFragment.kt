@@ -7,10 +7,13 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 
 import com.rig.oit.R
+import com.rig.oit.databinding.FragmentSignUpBinding
 
 class SignUpFragment : Fragment() {
+    private lateinit var binding:FragmentSignUpBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
 
     }
 

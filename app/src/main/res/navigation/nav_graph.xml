@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/mainActivity">
+    <fragment
+        android:id="@+id/mainActivity"
+        android:name="com.rig.oit.MainActivity"
+        android:label="activity_main"
+        tools:layout="@layout/activity_main">
+        <action
+            android:id="@+id/action_mainActivity_to_signUpFragment"
+            app:destination="@id/signUpFragment" />
+    </fragment>
+
+
+    <fragment
+        android:id="@+id/signUpFragment"
+        android:name="com.rig.oit.screens.SignUpFragment"
+        android:label="fragment_sign_up"
+        tools:layout="@layout/fragment_sign_up" >
+        <action
+            android:id="@+id/action_signUpFragment_to_mainActivity"
+            app:destination="@id/mainActivity" />
+    </fragment>
+    <fragment
+        android:id="@+id/fragmentHostMaiin"
+        android:name="com.rig.oit.screens.FragmentHostMaiin"
+        android:label="activity_fragment_host_maiin"
+        tools:layout="@layout/activity_fragment_host_maiin" >
+        <action
+            android:id="@+id/action_fragmentHostMaiin_to_searchFragment"
+            app:destination="@id/searchFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/searchFragment"
+        android:name="com.rig.oit.screens.SearchFragment"
+        android:label="fragment_search"
+        tools:layout="@layout/fragment_search" >
+        <action
+            android:id="@+id/action_searchFragment_to_fragmentHostMaiin"
+            app:destination="@id/fragmentHostMaiin" />
+    </fragment>
+</navigation>
