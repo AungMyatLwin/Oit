@@ -1,11 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
+
+<layout>
+    <data>
+        <variable
+            name="myViewModel"
+            type="com.rig.oit.viewmodel.MyViewModel" />
+    </data>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/frameLayout4"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainFragment">
+    tools:context=".screens.MainFragment">
 
     <EditText
         android:id="@+id/email_sign_in"
@@ -14,6 +21,7 @@
         android:layout_marginTop="97dp"
         android:gravity="center"
         android:hint="@string/email_email_com"
+        android:text="@{myViewModel.livedataEmail}"
         android:inputType="textEmailAddress"
         android:textSize="23sp"
         app:layout_constraintBottom_toTopOf="@+id/password_signIn"
@@ -29,6 +37,7 @@
         android:hint="@string/password"
         android:inputType="textPassword"
         android:textSize="23sp"
+        android:text="@{myViewModel.livedataPassword}"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
@@ -72,3 +81,5 @@
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>
