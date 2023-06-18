@@ -34,6 +34,7 @@ class MainFragment : Fragment() {
 
         binding.signIn.setOnClickListener {
             viewModel.signIn(binding.emailSignIn.text.toString(), binding.passwordSignIn.text.toString())
+            viewModel.liveDataMsg.value?.let { it1 -> toastMsg(it1) }
             it.findNavController().navigate(R.id.action_mainFragment_to_signedFragment)
         }
 
@@ -41,6 +42,9 @@ class MainFragment : Fragment() {
             it.findNavController().navigate(R.id.action_mainFragment_to_signUpFragment)
         }
         return binding.root
+    }
+    fun toastMsg(msg:String){
+        Toast.makeText(context, msg, Toast.LENGTH_LONG).show()
     }
 
 }

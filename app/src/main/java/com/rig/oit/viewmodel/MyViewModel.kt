@@ -1,5 +1,6 @@
 package com.rig.oit.viewmodel
 
+import android.provider.ContactsContract.CommonDataKinds.Email
 import android.util.Log
 import android.widget.Toast
 import androidx.lifecycle.LiveData
@@ -9,14 +10,21 @@ import androidx.lifecycle.ViewModel
 class MyViewModel: ViewModel() {
     private var email=MutableLiveData("String")
     private var password = MutableLiveData("String")
-
     private var msg = MutableLiveData("String")
+    private var signUpName = MutableLiveData("String")
+    private var signupRePassword = MutableLiveData("String")
+
 
     var livedataEmail :LiveData<String> = email
     var livedataPassword : LiveData<String> = password
     var liveDataMsg :LiveData<String> = msg
 
+    var nameSignup: LiveData<String> = signUpName
+    var passwordReSignup:LiveData<String> = signupRePassword
+
     init {
+        signUpName.value = ""
+        signupRePassword.value = ""
         email.value = ""
         password.value = ""
     }
@@ -28,14 +36,27 @@ class MyViewModel: ViewModel() {
     fun setPassword(x:String){
         password.value = x
     }
+
+    fun setName(x:String){
+        signUpName.value = x
+    }
+    fun setRepassword(x:String){
+        signupRePassword.value = x
+    }
+
     fun signIn(emailInput:String, password:String){
         setEmail(emailInput)
         setPassword(password)
+
         msg.value =  "${this.email.value} and ${this.password.value}"
-        Log.d("Sgs", "signUp:${msg.value} ")
+        Log.d("Sgs", "signIn:${msg.value} ")
     }
 
-    fun signUp(){
-
+    fun signupSave(xName:String, xEmail: String, xPassword:String, xRePassword:String){
+        setName(xName)
+        setEmail(xEmail)
+        setPassword(xPassword)
+        setRepassword(xRePassword)
+        msg.value =  "${email.value} and ${password.value} ${signupRePassword.value}  ${signUpName.value}"
     }
 }
