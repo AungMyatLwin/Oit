@@ -24,8 +24,16 @@ class SignedFragment : Fragment() {
     ): View? {
         _binding = FragmentSignedBinding.inflate(layoutInflater)
 
+         var testRecyclerView = arrayListOf<String>(
+            "Test 1",
+            "Test 2",
+            "Test 3",
+            "Test 4",
+            "Test 5"
+        )
+
         binding.recyclerView.layoutManager = LinearLayoutManager(requireContext())
-        binding.recyclerView.adapter = RecyclerViewAdapter()
+        binding.recyclerView.adapter = RecyclerViewAdapter(testRecyclerView)
 
         binding.search.setOnClickListener {
             it.findNavController().navigate(R.id.action_signedFragment_to_searchFragment)

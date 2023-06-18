@@ -7,14 +7,8 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.rig.oit.R
 
-class RecyclerViewAdapter():RecyclerView.Adapter<MyViewHolder>() {
-    private var testRecyclerView = arrayListOf<String>(
-        "Test 1",
-        "Test 2",
-        "Test 3",
-        "Test 4",
-         "Test 5"
-    )
+class RecyclerViewAdapter(val testRecyclerView: ArrayList<String>) :RecyclerView.Adapter<MyViewHolder>() {
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
         var layoutInflater = LayoutInflater.from(parent.context)
         val listItem = layoutInflater.inflate(R.layout.list_item, parent, false)
