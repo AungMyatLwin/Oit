@@ -19,22 +19,23 @@ class MyViewModel: ViewModel() {
     init {
         email.value = ""
         password.value = ""
-        msg.value = ""
     }
 
     fun setEmail(x:String){
-        email.value =  x
+        email.value=x
+        Log.d("tag", "${email.value.toString()}")
     }
-
-    fun setName(x:String){
+    fun setPassword(x:String){
         password.value = x
+    }
+    fun signIn(emailInput:String, password:String){
+        setEmail(emailInput)
+        setPassword(password)
+        msg.value =  "${this.email.value} and ${this.password.value}"
+        Log.d("Sgs", "signUp:${msg.value} ")
     }
 
     fun signUp(){
-        msg.value =  "${livedataEmail.value} and ${livedataPassword.value}"
-        Log.d("Sgs", "signUp:${msg.value} ")
-    }
-    fun signIn(){
 
     }
 }

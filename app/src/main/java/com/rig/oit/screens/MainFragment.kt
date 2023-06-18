@@ -32,14 +32,11 @@ class MainFragment : Fragment() {
         binding.myViewModel = viewModel
         binding.lifecycleOwner=this
 
-
-
-
         binding.signIn.setOnClickListener {
-
+            viewModel.signIn(binding.emailSignIn.text.toString(), binding.passwordSignIn.text.toString())
             it.findNavController().navigate(R.id.action_mainFragment_to_signedFragment)
-
         }
+
         binding.signUp.setOnClickListener {
             it.findNavController().navigate(R.id.action_mainFragment_to_signUpFragment)
         }
