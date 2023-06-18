@@ -12,23 +12,37 @@
         android:id="@+id/search"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="633dp"
+        android:layout_marginTop="16dp"
         android:text="search"
         android:textSize="34sp"
-        app:layout_constraintBottom_toTopOf="@+id/tabLayout"
+        app:layout_constraintBottom_toTopOf="@+id/buy"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/buy"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="92dp"
+        android:text="Buy"
+        android:textSize="34sp"
+        app:layout_constraintBottom_toTopOf="@+id/recyclerView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView"
-        android:layout_width="411dp"
-        android:layout_height="617dp"
-        android:layout_marginTop="64dp"
+        android:layout_width="match_parent"
+        android:layout_height="372dp"
+        android:layout_marginBottom="116dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintStart_toStartOf="parent" />
 
     <com.google.android.material.tabs.TabLayout
         android:id="@+id/tabLayout"

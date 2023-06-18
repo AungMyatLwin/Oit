@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.rig.oit.R
 import com.rig.oit.databinding.FragmentSignedBinding
@@ -25,6 +26,15 @@ class SignedFragment : Fragment() {
 
         binding.recyclerView.layoutManager = LinearLayoutManager(requireContext())
         binding.recyclerView.adapter = RecyclerViewAdapter()
+
+        binding.search.setOnClickListener {
+            it.findNavController().navigate(R.id.action_signedFragment_to_searchFragment)
+        }
+
+        binding.buy.setOnClickListener {
+            it.findNavController().navigate(R.id.action_signedFragment_to_addItems)
+        }
+
         return binding.root
     }
 

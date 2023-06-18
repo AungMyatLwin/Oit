@@ -34,6 +34,9 @@
         <action
             android:id="@+id/action_signedFragment_to_searchFragment"
             app:destination="@id/searchFragment" />
+        <action
+            android:id="@+id/action_signedFragment_to_addItems"
+            app:destination="@id/addItems" />
     </fragment>
     <fragment
         android:id="@+id/searchFragment"
@@ -43,5 +46,14 @@
         <action
             android:id="@+id/action_searchFragment_to_mainFragment"
             app:destination="@id/mainFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/addItems"
+        android:name="com.rig.oit.screens.AddItems"
+        android:label="fragment_add_items"
+        tools:layout="@layout/fragment_add_items" >
+        <action
+            android:id="@+id/action_addItems_to_signedFragment"
+            app:destination="@id/signedFragment" />
     </fragment>
 </navigation>
