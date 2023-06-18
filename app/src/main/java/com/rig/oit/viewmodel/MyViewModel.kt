@@ -1,13 +1,15 @@
 package com.rig.oit.viewmodel
 
+import android.app.Application
 import android.provider.ContactsContract.CommonDataKinds.Email
 import android.util.Log
 import android.widget.Toast
+import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 
-class MyViewModel: ViewModel() {
+class MyViewModel(): ViewModel() {
     private var email=MutableLiveData("String")
     private var password = MutableLiveData("String")
     private var msg = MutableLiveData("String")
