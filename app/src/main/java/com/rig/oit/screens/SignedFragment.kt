@@ -5,17 +5,22 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.navigation.findNavController
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.rig.oit.R
 import com.rig.oit.databinding.FragmentSignedBinding
 import com.rig.oit.recyclerviews.RecyclerViewAdapter
+import com.rig.oit.room.ItemDatabase
+import com.rig.oit.room.ItemRepository
+import com.rig.oit.room.Items
+import com.rig.oit.viewmodel.SignedViewModel
+import com.rig.oit.viewmodel.SignedViewModelFactory
 
 class SignedFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
     }
+    private lateinit var viewModel: SignedViewModel
     private var _binding:FragmentSignedBinding?=null
     private val binding get() = _binding!!
     override fun onCreateView(
@@ -23,24 +28,26 @@ class SignedFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         _binding = FragmentSignedBinding.inflate(layoutInflater)
-
-         var testRecyclerView = arrayListOf<String>(
-            "Test 1",
-            "Test 2",
-            "Test 3",
-            "Test 4",
-            "Test 5"
-        )
-
         binding.recyclerView.layoutManager = LinearLayoutManager(requireContext())
-        binding.recyclerView.adapter = RecyclerViewAdapter(testRecyclerView)
 
-        binding.search.setOnClickListener {
-            it.findNavController().navigate(R.id.action_signedFragment_to_searchFragment)
+
+        val daos =ItemDatabase.getInstance(requireContext().applicationContext)!!.itemDao()
+        val repository: ItemRepository=ItemRepository(daos)
+
+        val factory = SignedViewModelFactory(repository)
+
+        viewModel=ViewModelProvider(this,factory).get(SignedViewModel::class.java)
+        binding.recyclerView.adapter = RecyclerViewAdapter(viewModel.items())
+
+        viewModel.getItems.observe(viewLifecycleOwner) { items ->
+            binding.recyclerView.adapter = RecyclerViewAdapter(items)
         }
 
+
         binding.buy.setOnClickListener {
-            it.findNavController().navigate(R.id.action_signedFragment_to_addItems)
+            val items= Items(0,binding.addEdit.text.toString(), false)
+            viewModel.insertItems(items)
+            binding.recyclerView.adapter = RecyclerViewAdapter(viewModel.items())
         }
 
         return binding.root

@@ -8,8 +8,13 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.rig.oit.room.ItemDao
+import com.rig.oit.room.ItemRepository
+import com.rig.oit.room.Items
 
-class MyViewModel(): ViewModel() {
+class MyViewModel: ViewModel() {
+    private val getItems=MutableLiveData<List<Items>>()
+
     private var email=MutableLiveData("String")
     private var password = MutableLiveData("String")
     private var msg = MutableLiveData("String")
@@ -61,4 +66,5 @@ class MyViewModel(): ViewModel() {
         setRepassword(xRePassword)
         msg.value =  "${email.value} and ${password.value} ${signupRePassword.value}  ${signUpName.value}"
     }
+
 }
