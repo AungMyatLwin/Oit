@@ -8,4 +8,6 @@ class ItemRepository(private val dao: ItemDao) {
     fun insertItem(item:Items){
         dao.insertItem(item)
     }
+
+    // add the retrofit here / retrofit or room should be under the repository
 }

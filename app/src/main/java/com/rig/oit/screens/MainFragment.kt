@@ -11,7 +11,10 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
 import com.rig.oit.R
 import com.rig.oit.databinding.FragmentMainBinding
-import com.rig.oit.viewmodel.MyViewModel
+import com.rig.oit.room.ItemDatabase
+import com.rig.oit.room.ItemRepository
+import com.rig.oit.viewmodel.SignedViewModel
+import com.rig.oit.viewmodel.SignedViewModelFactory
 
 class MainFragment : Fragment() {
 
@@ -19,15 +22,18 @@ class MainFragment : Fragment() {
         super.onCreate(savedInstanceState)
     }
     private lateinit var binding:FragmentMainBinding
-    private lateinit var viewModel:MyViewModel
+    private lateinit var viewModel:SignedViewModel
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
       binding=DataBindingUtil.inflate(inflater,R.layout.fragment_main,container,false)
+        val daos = ItemDatabase.getInstance(requireContext().applicationContext)!!.itemDao()
+        val repository: ItemRepository = ItemRepository(daos)
 
-        viewModel= ViewModelProvider(this)[MyViewModel::class.java]
+        val factory = SignedViewModelFactory(repository)
+        viewModel= ViewModelProvider(this,factory)[SignedViewModel::class.java]
 
         binding.myViewModel = viewModel
         binding.lifecycleOwner=this
