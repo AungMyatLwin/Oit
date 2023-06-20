@@ -65,7 +65,7 @@ class SignedViewModel(private val repository: ItemRepository): ViewModel() {
         setEmail(xEmail)
         setPassword(xPassword)
         setRepassword(xRePassword)
-        msg.value =  "${email.value} and ${password.value} ${signupRePassword.value}  ${signUpName.value}"
+        msg.value =  "${email.value} and ${password.value} ${passwordReSignup.value}  ${signUpName.value}"
     }
 
     fun getAllItems(){
