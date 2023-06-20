@@ -108,5 +108,9 @@ class SignedViewModel(private val repository: ItemRepository): ViewModel() {
         return repository.getItems(data)
     }
 
+    fun deleteRow(data:String){
+        return  repository.deleteRow(data)
+    }
+
 
 }

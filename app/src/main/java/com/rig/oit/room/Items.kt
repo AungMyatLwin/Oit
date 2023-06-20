@@ -9,6 +9,6 @@ data class Items(
     @PrimaryKey(autoGenerate = true)
     val id:Int=0,
     @ColumnInfo(name = "item_name") val itemName: String?,
-    @ColumnInfo(name = "buyFlag") val buyable:Boolean=false,
+    @ColumnInfo(name = "buyFlag") var buyable:Boolean=false,
     @ColumnInfo( name= "email") val email:String?
 )

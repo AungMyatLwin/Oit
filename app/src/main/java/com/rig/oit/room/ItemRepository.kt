@@ -9,6 +9,10 @@ class ItemRepository(private val dao: ItemDao) {
         dao.insertItem(item)
     }
 
+    fun deleteRow(email: String){
+        return dao.deleteRows(email)
+    }
+
 
     // add the retrofit here / retrofit or room should be under the repository
 }

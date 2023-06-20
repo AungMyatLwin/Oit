@@ -33,7 +33,8 @@ class SignedFragment : Fragment() {
     ): View? {
         _binding = FragmentSignedBinding.inflate(layoutInflater)
         binding.recyclerView.layoutManager = LinearLayoutManager(requireContext())
-        val email = SignedFragmentArgs.fromBundle(requireArguments()).email
+
+        val email = arguments?.let { SignedFragmentArgs.fromBundle(it).email }
 
         val daos =ItemDatabase.getInstance(requireContext().applicationContext)!!.itemDao()
         val repository: ItemRepository=ItemRepository(daos)
@@ -41,17 +42,21 @@ class SignedFragment : Fragment() {
         val factory = SignedViewModelFactory(repository)
 
         viewModel=ViewModelProvider(this,factory).get(SignedViewModel::class.java)
-        binding.recyclerView.adapter = RecyclerViewAdapter(viewModel.items())
+        binding.recyclerView.adapter = RecyclerViewAdapter(viewModel.items(email!!))
 
         viewModel.getItems.observe(viewLifecycleOwner) { items ->
             binding.recyclerView.adapter = RecyclerViewAdapter(items)
         }
 
         binding.buy.setOnClickListener {
-            val items= Items(0,binding.addEdit.text.toString(), false, )
-            Log.i("Args ss","${}")
+            val items= Items(0,binding.addEdit.text.toString(), false, email)
+            Log.i("Args ss","${email}")
             viewModel.insertItems(items)
-            binding.recyclerView.adapter = RecyclerViewAdapter(viewModel.items())
+            binding.recyclerView.adapter = RecyclerViewAdapter(viewModel.items(email))
+        }
+        binding.clear.setOnClickListener {
+            viewModel.deleteRow(email)
+            binding.recyclerView.adapter = RecyclerViewAdapter(viewModel.items(email))
         }
 
         return binding.root

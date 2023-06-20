@@ -13,4 +13,7 @@ interface ItemDao {
     @Query("Select * from items where email = :email")
     fun getAllItems(email:String): List<Items>
 
+    @Query("Delete from items where email = :email ")
+    fun deleteRows(email: String)
+
 }

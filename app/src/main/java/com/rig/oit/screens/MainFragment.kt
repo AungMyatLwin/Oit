@@ -1,6 +1,7 @@
 package com.rig.oit.screens
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -42,7 +43,7 @@ class MainFragment : Fragment() {
         binding.signIn.setOnClickListener {
             viewModel.signIn(binding.emailSignIn.text.toString(), binding.passwordSignIn.text.toString()){ success ->
                 if (success) {
-                    val action = MainFragmentDirections.actionMainFragmentToSignedFragment(email)
+                    val action = MainFragmentDirections.actionMainFragmentToSignedFragment(binding.emailSignIn.text.toString())
                     it.findNavController().navigate(action)
                 } else {
                     toastMsg("Email and password are incorrect")
