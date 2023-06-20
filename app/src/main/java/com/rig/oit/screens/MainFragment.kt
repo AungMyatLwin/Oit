@@ -35,14 +35,19 @@ class MainFragment : Fragment() {
         val factory = SignedViewModelFactory(repository)
         viewModel= ViewModelProvider(this,factory)[SignedViewModel::class.java]
 
+
         binding.myViewModel = viewModel
         binding.lifecycleOwner=this
-
+        val email = binding.emailSignIn.text.toString()
         binding.signIn.setOnClickListener {
-            val flag =viewModel.signIn(binding.emailSignIn.text.toString(), binding.passwordSignIn.text.toString())
-           if(true){
-               it.findNavController().navigate(R.id.action_mainFragment_to_signedFragment)
-           }
+            viewModel.signIn(binding.emailSignIn.text.toString(), binding.passwordSignIn.text.toString()){ success ->
+                if (success) {
+                    val action = MainFragmentDirections.actionMainFragmentToSignedFragment(email)
+                    it.findNavController().navigate(action)
+                } else {
+                    toastMsg("Email and password are incorrect")
+                }
+            }
         }
 
         binding.signUp.setOnClickListener {

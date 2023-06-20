@@ -50,7 +50,7 @@ class SignedViewModel(private val repository: ItemRepository): ViewModel() {
 
     fun setEmail(x:String){
         email.value=x
-        Log.d("tag", "${email.value.toString()}")
+        Log.d("tag", email.value.toString())
     }
     fun setPassword(x:String){
         password.value = x
@@ -63,20 +63,27 @@ class SignedViewModel(private val repository: ItemRepository): ViewModel() {
         signupRePassword.value = x
     }
 
-    fun signIn(emailInput:String, password:String){
+    fun signIn(emailInput:String, password:String, callback: (Boolean) -> Unit):Boolean{
         var flag:Boolean = false
+        var email:String?=null
+        var pwd:String?=null
         ref.child("signup").child(emailInput).get().addOnSuccessListener {
-            val email=it.child(emailInput).value as String?
-            val pwd=it.child(password).value as String?
-//            I/firebase: Got value {password=12, email=qr} false null null
-            if(emailInput==email && password==pwd)
-                flag=true
-            Log.i("firebase", "Got value ${it.value} $flag $email $pwd")
+             email=it.child("email").value as String?
+            pwd=it.child("password").value as String?
 
+            if(email==emailInput && pwd == password)
+            {
+                flag=true
+            }
+            Log.i("firebase", "Got value email ${it.value} $email $pwd, $emailInput $password $flag")
+            callback(flag)
         }.addOnFailureListener{
             Log.e("firebase", "Error getting data $flag", it)
+            callback(flag)
         }
+        Log.i("firebase1", "$flag $email $pwd, $emailInput $password")
 
+        return flag
     }
 
     fun signupSave(xName:String, xEmail: String, xPassword:String, xRePassword:String){
@@ -90,15 +97,15 @@ class SignedViewModel(private val repository: ItemRepository): ViewModel() {
         return p1 == p2
     }
 
-    fun getAllItems(){
-        _getItems.value = repository.getItems()
+    fun getAllItems(data:String){
+        _getItems.value = repository.getItems(data)
     }
     fun insertItems(items: Items){
         repository.insertItem(items)
     }
 
-    fun items():List<Items>{
-        return repository.getItems()
+    fun items(data:String):List<Items>{
+        return repository.getItems(data)
     }
 
 

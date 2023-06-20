@@ -16,6 +16,8 @@
         <action
             android:id="@+id/action_mainFragment_to_signedFragment"
             app:destination="@id/signedFragment" />
+        <argument android:name="email"
+            app:argType="string" />
     </fragment>
     <fragment
         android:id="@+id/signUpFragment"
@@ -37,6 +39,9 @@
         <action
             android:id="@+id/action_signedFragment_to_addItems"
             app:destination="@id/addItems" />
+        <argument
+            android:name="email"
+            app:argType="string" />
     </fragment>
     <fragment
         android:id="@+id/searchFragment"
@@ -56,4 +61,7 @@
             android:id="@+id/action_addItems_to_signedFragment"
             app:destination="@id/signedFragment" />
     </fragment>
+    <argument
+        android:name="email"
+        android:defaultValue="String" />
 </navigation>
