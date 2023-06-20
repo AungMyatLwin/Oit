@@ -39,9 +39,10 @@ class MainFragment : Fragment() {
         binding.lifecycleOwner=this
 
         binding.signIn.setOnClickListener {
-            viewModel.signIn(binding.emailSignIn.text.toString(), binding.passwordSignIn.text.toString())
-            viewModel.liveDataMsg.value?.let { it1 -> toastMsg(it1) }
-            it.findNavController().navigate(R.id.action_mainFragment_to_signedFragment)
+            val flag =viewModel.signIn(binding.emailSignIn.text.toString(), binding.passwordSignIn.text.toString())
+           if(true){
+               it.findNavController().navigate(R.id.action_mainFragment_to_signedFragment)
+           }
         }
 
         binding.signUp.setOnClickListener {
