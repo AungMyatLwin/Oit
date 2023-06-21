@@ -7,8 +7,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.rig.oit.R
 import com.rig.oit.databinding.FragmentSignedBinding
 import com.rig.oit.recyclerviews.RecyclerViewAdapter
 import com.rig.oit.room.ItemDatabase
@@ -16,6 +18,7 @@ import com.rig.oit.room.ItemRepository
 import com.rig.oit.room.Items
 import com.rig.oit.viewmodel.SignedViewModel
 import com.rig.oit.viewmodel.SignedViewModelFactory
+import okhttp3.internal.notifyAll
 
 class SignedFragment : Fragment() {
 
@@ -59,6 +62,9 @@ class SignedFragment : Fragment() {
             binding.recyclerView.adapter = RecyclerViewAdapter(viewModel.items(email))
         }
 
+        binding.logout.setOnClickListener {
+            it.findNavController().navigate(R.id.action_signedFragment_to_mainFragment)
+        }
         return binding.root
     }
 
