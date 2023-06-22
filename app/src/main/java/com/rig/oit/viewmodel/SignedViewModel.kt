@@ -4,26 +4,25 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.google.firebase.database.DataSnapshot
-import com.google.firebase.database.DatabaseError
-import com.google.firebase.database.FirebaseDatabase
-import com.google.firebase.database.ValueEventListener
-import com.google.firebase.database.ktx.database
-import com.google.firebase.database.ktx.getValue
-import com.google.firebase.ktx.Firebase
-import com.rig.oit.Users.User
 import com.rig.oit.room.ItemRepository
 import com.rig.oit.room.Items
+import android.content.Context
+import android.net.ConnectivityManager
+import android.net.NetworkCapabilities
+
 
 
 class SignedViewModel(private val repository: ItemRepository): ViewModel() {
 
+    fun isInternetAvailable(context: Context): Boolean {
+        val connectivityManager = context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+        val network = connectivityManager.activeNetwork
+        val networkCapabilities = connectivityManager.getNetworkCapabilities(network)
+        return networkCapabilities?.hasCapability(NetworkCapabilities.NET_CAPABILITY_INTERNET) == true
+    }
+
 
     private val _getItems = MutableLiveData<List<Items>>()
-
-    val url ="https://dummyproject-607fd-default-rtdb.asia-southeast1.firebasedatabase.app"
-    val dbs =  FirebaseDatabase.getInstance(url)
-    val ref = dbs.getReference()
 
     val getItems: LiveData<List<Items>> = _getItems
 
@@ -33,6 +32,8 @@ class SignedViewModel(private val repository: ItemRepository): ViewModel() {
     private var signUpName = MutableLiveData("String")
     private var signupRePassword = MutableLiveData("String")
 
+    private val _signInResult = MutableLiveData<Boolean>()
+    val signInResult: LiveData<Boolean> = _signInResult
 
     var livedataEmail :LiveData<String> = email
     var livedataPassword : LiveData<String> = password
@@ -63,37 +64,20 @@ class SignedViewModel(private val repository: ItemRepository): ViewModel() {
         signupRePassword.value = x
     }
 
-    fun signIn(emailInput:String, password:String, callback: (Boolean) -> Unit):Boolean{
-        var flag:Boolean = false
-        var email:String?=null
-        var pwd:String?=null
-        ref.child("signup").child(emailInput).get().addOnSuccessListener {
-             email=it.child("email").value as String?
-            pwd=it.child("password").value as String?
-
-            if(email==emailInput && pwd == password)
-            {
-                flag=true
-            }
-            Log.i("firebase", "Got value email ${it.value} $email $pwd, $emailInput $password $flag")
-            callback(flag)
-        }.addOnFailureListener{
-            Log.e("firebase", "Error getting data $flag", it)
-            callback(flag)
+    fun signIn(emailInput: String, password: String) {
+        repository.signIn(emailInput, password) { result ->
+            _signInResult.value = result
         }
-        Log.i("firebase1", "$flag $email $pwd, $emailInput $password")
-
-        return flag
     }
 
     fun signupSave(xName:String, xEmail: String, xPassword:String, xRePassword:String){
         if(checkPassword(xPassword, xRePassword)){
-            ref.child("signup").child(xEmail).setValue(User(xEmail,xPassword))
+            repository.signup(xEmail,xPassword)
         }
         msg.value =  "${email.value} and ${password.value} ${passwordReSignup.value}  ${signUpName.value}"
     }
 
-    fun checkPassword(p1:String, p2:String):Boolean{
+    private fun checkPassword(p1:String, p2:String):Boolean{
         return p1 == p2
     }
 

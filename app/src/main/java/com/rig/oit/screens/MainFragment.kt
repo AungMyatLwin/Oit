@@ -39,15 +39,23 @@ class MainFragment : Fragment() {
 
         binding.myViewModel = viewModel
         binding.lifecycleOwner=this
-        val email = binding.emailSignIn.text.toString()
+
+
         binding.signIn.setOnClickListener {
-            viewModel.signIn(binding.emailSignIn.text.toString(), binding.passwordSignIn.text.toString()){ success ->
-                if (success) {
-                    val action = MainFragmentDirections.actionMainFragmentToSignedFragment(binding.emailSignIn.text.toString())
-                    it.findNavController().navigate(action)
-                } else {
-                    toastMsg("Email and password are incorrect")
-                }
+            viewModel.signIn(
+                binding.emailSignIn.text.toString(),
+                binding.passwordSignIn.text.toString()
+            )
+        }
+
+        viewModel.signInResult.observe(viewLifecycleOwner) { success ->
+            Log.i("success", "$success")
+            if (success) {
+                val action = MainFragmentDirections
+                    .actionMainFragmentToSignedFragment(binding.emailSignIn.text.toString())
+                view?.findNavController()?.navigate(action)
+            } else {
+                toastMsg("Email and password are incorrect")
             }
         }
 
